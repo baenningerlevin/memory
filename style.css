@@ -20,7 +20,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 30px;
+  gap: 10px;
   background-color: #339af0;
   padding: 40px 60px;
   border-radius: 2em;
@@ -60,6 +60,7 @@ h2 {
   gap: 10px;
   transform-style: preserve-3d;
   perspective: 500px;
+  margin-bottom: 1em;
 }
 
 .card {
@@ -74,6 +75,7 @@ h2 {
   border-radius: 0.2em;
   transform: rotateY(180deg);
   transition: 0.25s;
+  user-select: none;
 }
 
 .card.flip {
@@ -94,6 +96,12 @@ h2 {
 .flip::after,
 .match::after {
   transform: rotateY(180deg);
+}
+
+.counter {
+  color: #fff;
+  font-size: 1.5rem;
+  margin-bottom: 1em;
 }
 
 @media screen and (max-width: 640px) {
@@ -140,5 +148,9 @@ h2 {
 
   .reset {
     font-size: 0.75em;
+  }
+
+  .counter {
+    font-size: 1.2em;
   }
 }

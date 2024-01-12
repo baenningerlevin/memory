@@ -19,6 +19,8 @@ const cardContent = [
 const shuffledCards = cardContent.sort(() => Math.random() - 0.5);
 const game = document.querySelector('.game');
 const resetBtn = document.querySelector('.reset');
+const counterEl = document.querySelector('.counter');
+let counter = 0;
 
 for (let i = 0; i < cardContent.length; i++) {
   // Create cards
@@ -29,8 +31,10 @@ for (let i = 0; i < cardContent.length; i++) {
 
   // Flip cards and check for match
   card.addEventListener('click', () => {
+    counter++;
+    counterEl.textContent = `Counter: ${counter}`;
     card.classList.add('flip');
-    setTimeout(() => checkForMatch(), 2000);
+    setTimeout(() => checkForMatch(), 3000);
   });
 }
 
