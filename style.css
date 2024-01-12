@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Source Code Pro', monospace;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #1864ab;
+}
+
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  background-color: #339af0;
+  padding: 40px 60px;
+  border-radius: 2em;
+  box-shadow: 5px 5px 30px 3px rgba(48, 54, 59, 0.5);
+}
+
+h2 {
+  font-size: 3em;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.reset {
+  padding: 15px 20px;
+  color: #339af0;
+  background-color: #fff;
+  border: none;
+  font-size: 1.5em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.1s;
+}
+
+.reset:focus {
+  color: #fff;
+  background-color: #339af0;
+}
+
+.game {
+  width: 440px;
+  height: 440px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  transform-style: preserve-3d;
+  perspective: 500px;
+}
+
+.card {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3em;
+  background-color: #fff;
+  border-radius: 0.2em;
+  transform: rotateY(180deg);
+  transition: 0.25s;
+}
+
+.card.flip {
+  border-radius: 0.2em;
+  transform: rotateY(0deg);
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  background-color: #74c0fc;
+  inset: 0;
+  transform: rotateY(0deg);
+  backface-visibility: hidden;
+  border-radius: 0.2em;
+}
+
+.flip::after,
+.match::after {
+  transform: rotateY(180deg);
+}
+
+@media screen and (max-width: 640px) {
+  h2 {
+    font-size: 2em;
+  }
+
+  .reset {
+    font-size: 1em;
+  }
+
+  .game {
+    width: 260px;
+    height: auto;
+    justify-content: center;
+  }
+
+  .container {
+    margin: 2em 0;
+  }
+
+  .card {
+    width: 70px;
+    height: 70px;
+    font-size: 2em;
+  }
+}
+
+@media screen and (max-width: 390px) {
+  h2 {
+    font-size: 1.5em;
+    text-align: center;
+  }
+
+  .container {
+    width: 80%;
+  }
+
+  .game {
+    width: 220px;
+    height: auto;
+    justify-content: center;
+  }
+
+  .reset {
+    font-size: 0.75em;
+  }
+}
