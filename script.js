@@ -16,49 +16,118 @@ const cardContent = [
   '🏓',
   '🏓',
 ];
-const shuffledCards = cardContent.sort(() => Math.random() - 0.5);
-const game = document.querySelector('.game');
-const resetBtn = document.querySelector('.reset');
-const counterEl = document.querySelector('.counter');
-let counter = 0;
 
-for (let i = 0; i < cardContent.length; i++) {
-  // Create cards
-  const card = document.createElement('div');
-  card.classList.add('card');
-  card.textContent = shuffledCards[i];
-  game.appendChild(card);
+// Algorithm to shuffle cards
+function shuffle(arr) {
+  let currentIndex = arr.length,
+    temporaryValue,
+    randomIndex;
 
-  // Flip cards and check for match
-  card.addEventListener('click', () => {
-    counter++;
-    counterEl.textContent = `Counter: ${counter}`;
-    card.classList.add('flip');
-    setTimeout(() => checkForMatch(), 3000);
-  });
+  while (0 !== currentIndex) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    temporaryValue = arr[currentIndex];
+    arr[currentIndex] = arr[randomIndex];
+    arr[randomIndex] = temporaryValue;
+  }
+
+  return arr;
 }
 
-resetBtn.addEventListener('click', () => {
-  location.reload();
-});
+// Select all global elements
+const game = document.querySelector('.game');
+const resetBtns = document.querySelectorAll('.reset');
+const counterEl = document.querySelector('.counter');
+const modal = document.querySelector('.modal');
+const overlay = document.querySelector('.overlay');
+const closeBtn = document.querySelector('.btn-close');
 
-const checkForMatch = () => {
-  const flippedCards = document.querySelectorAll('.flip');
+// Declare variables for initGame() function
+let shuffledCards;
+let flippedCards;
+let matchedCards;
 
-  if (flippedCards.length > 1) {
-    if (flippedCards[0].textContent === flippedCards[1].textContent) {
-      flippedCards[0].classList.add('match');
-      flippedCards[1].classList.add('match');
+(function initGame() {
+  // Initialize values
+  shuffledCards = shuffle(cardContent);
+  game.innerHTML = '';
+  flippedCards = [];
+  matchedCards = [];
 
-      flippedCards[1].classList.remove('flip');
-      flippedCards[0].classList.remove('flip');
+  // Create cards
+  for (let i = 0; i < cardContent.length; i++) {
+    const card = document.createElement('div');
+    card.classList.add('card');
+    card.textContent = shuffledCards[i];
+    game.appendChild(card);
+  }
+})();
 
-      if (document.querySelectorAll('.match').length === cardContent.length) {
-        alert('You won!');
-      }
-    } else {
-      flippedCards[1].classList.remove('flip');
-      flippedCards[0].classList.remove('flip');
+const cards = document.querySelectorAll('.card');
+
+const flipCard = (event) => {
+  // Check if card can be flipped
+  if (flippedCards.length < 2 && !flippedCards.includes(event.currentTarget)) {
+    event.currentTarget.classList.add('flip');
+    flippedCards.push(event.currentTarget);
+
+    if (flippedCards.length === 2) {
+      setTimeout(() => checkForMatch(), 1000);
     }
   }
 };
+
+cards.forEach((card) => {
+  card.addEventListener('click', flipCard);
+});
+
+const openModal = () => {
+  modal.classList.remove('hidden');
+  overlay.classList.remove('hidden');
+};
+
+const closeModal = () => {
+  modal.classList.add('hidden');
+  overlay.classList.add('hidden');
+};
+
+const displayModal = () => {
+  openModal();
+
+  // Watch for clicks on button or overlay
+  overlay.addEventListener('click', closeModal);
+  closeBtn.addEventListener('click', closeModal);
+
+  // Listen for esc
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
+      closeModal();
+    }
+  });
+};
+
+const checkForMatch = () => {
+  if (flippedCards[0].textContent === flippedCards[1].textContent) {
+    matchedCards.push(...flippedCards);
+    matchedCards.forEach((card) => {
+      card.classList.add('match');
+      card.removeEventListener('click', flipCard);
+    });
+
+    if (matchedCards.length === cardContent.length) {
+      displayModal();
+    }
+  } else {
+    flippedCards.forEach((card) => card.classList.remove('flip'));
+  }
+
+  flippedCards = [];
+};
+
+resetBtns.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    closeModal();
+    initGame();
+  });
+});

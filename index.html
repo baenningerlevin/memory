@@ -4,17 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <title>Memory Game - Levin Bänninger</title>
+    <title>Memory - Levin Bänninger</title>
   </head>
   <body>
     <div class="container">
-      <h2>Memory Game</h2>
-      <p class="counter">Counter: 0</p>
+      <h2>Memory</h2>
       <div class="game">
 
       </div>
-      <button class="reset">Reset Game</button>
+      <button class="reset">Reset</button>
     </div>
+
+      <div class="modal hidden">
+        <button class="btn-close">&times;</button>
+        <p class="modal-text">You Won! 🎉</p>
+        <button class="reset modal-reset">Reset</button>
+      </div>
+      <div class="overlay hidden"></div>
 
     <script src="script.js"></script>
   </body>
