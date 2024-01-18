@@ -31,8 +31,7 @@ h2 {
   font-size: 3em;
   color: #fff;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 0.5em;
+  letter-spacing: 0.1em;  
 }
 
 .reset {
@@ -104,6 +103,26 @@ h2 {
 .match {
   background-color: #c3e4fd;
   cursor: default;
+}
+
+.counter-text {
+  color: #fff;
+  font-size: 1.25rem;
+}
+
+.highscore-text {
+  font-weight: 700;
+  margin-bottom: 1em;
+}
+
+.black {
+  color: #000;
+  font-size: 1.75rem;
+}
+
+.score-container {
+  display: flex;
+  gap: 2em;
 }
 
 .flip::after {
@@ -260,7 +279,13 @@ h2 {
     font-size: 0.75em;
   }
 
-  .counter {
-    font-size: 1.2em;
+  .score-container {
+    flex-direction: column;
+    text-align: center;
+    gap: .5em;
+  }
+
+  .counter-text {
+    font-size: 1rem;
   }
 }

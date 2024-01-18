@@ -9,18 +9,21 @@
   <body>
     <div class="container">
       <h2>Memory</h2>
-      <div class="game">
-
+      <div class="score-container">
+        <p class="counter-text">Score: <span class="counter">0</span></p>
+        <p class="counter-text highscore-text">Highscore: <span class="highscore">0</span></p>
       </div>
+      <div class="game"></div>
       <button class="reset">Reset</button>
     </div>
 
-      <div class="modal hidden">
-        <button class="btn-close">&times;</button>
-        <p class="modal-text">You Won! 🎉</p>
-        <button class="reset modal-reset">Reset</button>
-      </div>
-      <div class="overlay hidden"></div>
+    <div class="modal hidden">
+      <button class="btn-close">&times;</button>
+      <p class="modal-text">You Won! 🎉</p>
+      <p class="counter-text black">Score: <span class="counter">0</span></p>
+      <button class="reset modal-reset">Reset</button>
+    </div>
+    <div class="overlay hidden"></div>
 
     <script src="script.js"></script>
   </body>

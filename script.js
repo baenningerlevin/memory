@@ -38,15 +38,18 @@ function shuffle(arr) {
 // Select all global elements
 const game = document.querySelector('.game');
 const resetBtns = document.querySelectorAll('.reset');
-const counterEl = document.querySelector('.counter');
+const counterEls = document.querySelectorAll('.counter');
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const closeBtn = document.querySelector('.btn-close');
+const highScoreEl = document.querySelector('.highscore');
 
 // Declare variables for initGame() function
 let shuffledCards;
 let flippedCards;
 let matchedCards;
+let counter;
+let highScore = Infinity;
 
 const flipCard = (event) => {
   // Check if card can be flipped
@@ -66,6 +69,8 @@ function initGame() {
   game.innerHTML = '';
   flippedCards = [];
   matchedCards = [];
+  counter = 0;
+  counterEls.forEach((el) => (el.textContent = counter));
 
   // Create cards
   for (let i = 0; i < cardContent.length; i++) {
@@ -119,8 +124,15 @@ const checkForMatch = () => {
 
     if (matchedCards.length === cardContent.length) {
       displayModal();
+
+      if (counter < highScore) {
+        highScore = counter;
+        highScoreEl.textContent = highScore;
+      }
     }
   } else {
+    counter++;
+    counterEls.forEach((el) => (el.textContent = counter));
     flippedCards.forEach((card) => card.classList.remove('flip'));
   }
 
