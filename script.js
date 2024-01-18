@@ -48,7 +48,19 @@ let shuffledCards;
 let flippedCards;
 let matchedCards;
 
-(function initGame() {
+const flipCard = (event) => {
+  // Check if card can be flipped
+  if (flippedCards.length < 2 && !flippedCards.includes(event.currentTarget)) {
+    event.currentTarget.classList.add('flip');
+    flippedCards.push(event.currentTarget);
+
+    if (flippedCards.length === 2) {
+      setTimeout(() => checkForMatch(), 1000);
+    }
+  }
+};
+
+function initGame() {
   // Initialize values
   shuffledCards = shuffle(cardContent);
   game.innerHTML = '';
@@ -62,25 +74,15 @@ let matchedCards;
     card.textContent = shuffledCards[i];
     game.appendChild(card);
   }
-})();
 
-const cards = document.querySelectorAll('.card');
+  const cards = document.querySelectorAll('.card');
 
-const flipCard = (event) => {
-  // Check if card can be flipped
-  if (flippedCards.length < 2 && !flippedCards.includes(event.currentTarget)) {
-    event.currentTarget.classList.add('flip');
-    flippedCards.push(event.currentTarget);
+  cards.forEach((card) => {
+    card.addEventListener('click', flipCard);
+  });
+}
 
-    if (flippedCards.length === 2) {
-      setTimeout(() => checkForMatch(), 1000);
-    }
-  }
-};
-
-cards.forEach((card) => {
-  card.addEventListener('click', flipCard);
-});
+initGame();
 
 const openModal = () => {
   modal.classList.remove('hidden');
